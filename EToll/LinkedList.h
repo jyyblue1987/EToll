@@ -1,7 +1,13 @@
 #pragma once
-#include "EToll.h"
+#include "Node.h"
+
 class LinkedList
 {
+	Node *head;
+	Node *tail;
+
+	void FreeMemory();
+
 public:
 	LinkedList();
 	~LinkedList();
@@ -10,7 +16,7 @@ public:
 	void addToTail(EToll c);
 	void remove(string licence);
 	int count(string type);
-	int totalIncome();
+	double totalIncome();
 
 	
 
