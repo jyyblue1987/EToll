@@ -36,6 +36,8 @@ void LinkedList::addToHead(EToll c)
 	Node *n = new Node(c, NULL, head);
 	if (head == NULL)
 		tail = n;
+	else
+		head->prev = n;
 
 	head = n;
 }
@@ -45,6 +47,8 @@ void LinkedList::addToTail(EToll c)
 	Node *n = new Node(c, tail, NULL);
 	if (tail == NULL)
 		head = n;
+	else
+		tail->next = n;
 
 	tail = n;
 }
@@ -116,19 +120,24 @@ double LinkedList::totalIncome()
 		t = t->next;
 	}
 
-	return 0;
+	return total;
 }
 
 ostream& operator<<(ostream &output, const LinkedList &L) 
 {
 	Node *t = L.head;
+	if (t == NULL)
+	{
+		output << "List is empty.";
+		return output;
+	}
 	
 	while (t != NULL)
 	{
 		output << "  (" << t->value.get_licence() << "," << t->value.get_type() << ")";
 		t = t->next;
 	}
-	
+
 	return output;
 }
 
