@@ -17,8 +17,8 @@ public:
 	void remove(string licence);
 	int count(string type);
 	double totalIncome();
+	void order();
 
-	
 
 	friend ostream& operator<<(ostream &output, const LinkedList &L);
 	LinkedList & operator+=(const LinkedList & L);

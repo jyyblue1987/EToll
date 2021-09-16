@@ -123,6 +123,82 @@ double LinkedList::totalIncome()
 	return total;
 }
 
+void sortedInsert(Node** head_ref, Node* newNode)
+{
+	Node* t;
+
+	// if list is empty
+	if (*head_ref == NULL)
+		*head_ref = newNode;
+
+	// if the node is to be inserted at the beginning
+	// of the doubly linked list
+	else if ((*head_ref)->value.get_licence() >= newNode->value.get_licence()) {
+		newNode->next = *head_ref;
+		newNode->next->prev = newNode;
+		*head_ref = newNode;
+	}
+
+	else {
+		t = *head_ref;
+
+		// locate the node after which the new node
+		// is to be inserted
+		while (t->next != NULL &&
+			t->next->value.get_licence() < newNode->value.get_licence())
+			t = t->next;
+
+		/*Make the appropriate links */
+
+		newNode->next = t->next;
+
+		// if the new node is not inserted
+		// at the end of the list
+		if (t->next != NULL)
+			newNode->next->prev = newNode;
+
+		t->next = newNode;
+		newNode->prev = t;
+	}
+}
+
+void LinkedList::order()
+{
+	// Initialize 'sorted' - a sorted doubly linked list
+	Node* sorted = NULL;
+
+	// Traverse the given doubly linked list and
+	// insert every node to 'sorted'
+	Node* t = head;
+	while (t != NULL) {
+
+		// Store next for next iteration
+		Node* n = t->next;
+
+		// removing all the links so as to create 'current'
+		// as a new node for insertion
+		t->prev = t->next = NULL;
+
+		// insert current in 'sorted' doubly linked list
+		sortedInsert(&sorted, t);
+
+		// Update current
+		t = n;
+	}
+
+	// Update head_ref to point to sorted doubly linked list
+	head = sorted;
+
+	// update tail
+	t = head;
+	tail = NULL;
+	while (t != NULL)
+	{
+		tail = t;
+		t = t->next;
+	}
+}
+
 ostream& operator<<(ostream &output, const LinkedList &L) 
 {
 	Node *t = L.head;
